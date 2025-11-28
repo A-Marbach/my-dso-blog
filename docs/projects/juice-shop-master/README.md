@@ -28,7 +28,7 @@ This repository contains the documentation of three selected Juice Shop challeng
 - **Category:** Broken Access Control  
 - **Description:** A publicly accessible `/ftp` directory allowed access to internal markdown files without authentication.  
 - **Documentation:**  
-  → [challenges/Brocken_Access_Control](./challenges/Brocken_Access_Control/README.md)
+  → [challenges/Broken_Access_Control](./challenges/Broken_Access_Control/README.md)
 - Directory Browsing (/ftp): https://www.loom.com/share/16de980d25f94615bd2851370d9391b4
 
 ### 2. Stored XSS via Manipulated Registration Request

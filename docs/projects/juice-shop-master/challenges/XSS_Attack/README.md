@@ -1,3 +1,8 @@
+> ⚠️ **Security Notice**  
+> This project is strictly for educational and research purposes.  
+> No real personal data, credentials, or sensitive information were used.  
+> Perform security testing only with proper authorization.
+
 # Penetration Test Report – Stored XSS via Manipulated Registration Request
 
 ## 1. Objective
