@@ -1,3 +1,8 @@
+> ⚠️ **Security Notice**  
+> This project is strictly for educational and research purposes.  
+> No real personal data, credentials, or sensitive information were used.  
+> Perform security testing only with proper authorization.
+
 # Juice Shop Master
 This project documents the analysis and exploitation of several security vulnerabilities within the OWASP Juice Shop application.  
 All findings and demonstrations are conducted strictly for educational and research purposes only.
@@ -48,7 +53,3 @@ Each challenge includes a short walkthrough video (max. 5 minutes) demonstrating
 
 
 
-## Security Notice
-This project and all included documentation, videos, and demonstrations are strictly for **educational purposes only**.  
-No real personal data, credentials, or sensitive information were used at any time.  
-Always follow legal and ethical guidelines when performing security testing.
