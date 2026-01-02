@@ -72,6 +72,12 @@ const config: Config = {
     ],
   ],
 
+  themes: ['@docusaurus/theme-mermaid'], // <- Hier korrekt hinzufügen
+
+  markdown: {
+    mermaid: true, // <- Mermaid in MDX aktivieren
+  },
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
@@ -155,6 +161,8 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
 };
+
+
 
 
 if (blogEnabled) {
