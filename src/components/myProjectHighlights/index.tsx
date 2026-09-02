@@ -5,6 +5,20 @@ import styles from './my-project-highlights.module.css';
 export default function MyProjectHighlights() {
   const projects = [
     {
+      img: "img/vikunja-aws-image.png",
+      title: "Vikunja AWS Fargate",
+      description:
+        "Built and operated an AWS ECS Fargate environment with Terraform, including private networking, ALB, RDS PostgreSQL, S3 persistence, Secrets Manager, CloudWatch alarms, SNS notifications, backup and restore testing, and Terraform CI.",
+      techIcons: [
+        "img/container.png",
+        "img/yaml.png",
+        "img/security.png",
+        "img/cicd.png"
+      ],
+      github: "https://github.com/A-Marbach/vikunja-aws-fargate",
+      doc: "/myPortfolio/docs/projects/vikunja-aws-fargate"
+    },
+    {
       img: "img/aws-img.png",
       title: "Conduit AWS Infrastructure",
       description: "Built AWS infrastructure with Terraform, including VPC, IAM, security groups, and EC2. Automated Ubuntu configuration with Ansible, deployed the application with Docker, and added GitHub Actions and CloudWatch monitoring.",
@@ -16,31 +30,6 @@ export default function MyProjectHighlights() {
       ],
       github: "https://github.com/A-Marbach/conduit-aws",
       doc: "/myPortfolio/docs/projects/conduit-aws"
-    },
-    {
-      img: "img/k3s-img.png",
-      title: "k3s Infrastructure",
-      description: "Provisioned and configured a multi-node Kubernetes (k3s) cluster on Hetzner Cloud using Terraform and Ansible, with automated HTTPS via Traefik and cert-manager, and Kubernetes-native observability using the kube-prometheus-stack Helm chart.",
-      techIcons: [
-        "img/container.png",
-        "img/security.png",
-        "img/yaml.png"
-      ],
-      github: "https://github.com/A-Marbach/k3s-infrastructure",
-      doc: "/myPortfolio/docs/projects/k3s-infrastructure"
-    },
-    {
-      img: "img/monitoring-stack-img.png",
-      title: "Monitoring Stack",
-      description: "Built a monitoring platform with Prometheus and Grafana for infrastructure and container observability, including metrics collection, dashboards, and alerting.",
-      techIcons: [
-        "img/container.png",
-        "img/shell.png",
-        "img/yaml.png",
-        "img/security.png"
-      ],
-      github: "https://github.com/A-Marbach/monitoring-stack",
-      doc: "/myPortfolio/docs/projects/monitoring-stack"
     },
     {
       img: "img/bookstore-img.png",
@@ -56,24 +45,31 @@ export default function MyProjectHighlights() {
       doc: "/myPortfolio/docs/projects/bookstore-api"
     },
     {
-      img: "img/conduit-img.png",
-      title: "Conduit-Container",
-      description:
-        "Containerized a full-stack Django + Angular application, built automated CI/CD pipelines for zero-touch deployments, and enforced infrastructure stability through scripted configuration management.",
+      img: "img/monitoring-stack-img.png",
+      title: "Monitoring Stack",
+      description: "Built a monitoring platform with Prometheus and Grafana for infrastructure and container observability, including metrics collection, dashboards, and alerting.",
       techIcons: [
         "img/container.png",
-        "img/yaml.png",
         "img/shell.png",
-        "img/security.png",
-        "img/cicd.png"
+        "img/yaml.png",
+        "img/security.png"
       ],
-      github: "https://github.com/A-Marbach/conduit-container",
-      doc: "/myPortfolio/docs/projects/conduit-container"
+      github: "https://github.com/A-Marbach/monitoring-stack",
+      doc: "/myPortfolio/docs/projects/monitoring-stack"
     },
 
-
-
-
+    {
+      img: "img/k3s-img.png",
+      title: "k3s Infrastructure",
+      description: "Provisioned and configured a multi-node Kubernetes (k3s) cluster on Hetzner Cloud using Terraform and Ansible, with automated HTTPS via Traefik and cert-manager, and Kubernetes-native observability using the kube-prometheus-stack Helm chart.",
+      techIcons: [
+        "img/container.png",
+        "img/security.png",
+        "img/yaml.png"
+      ],
+      github: "https://github.com/A-Marbach/k3s-infrastructure",
+      doc: "/myPortfolio/docs/projects/k3s-infrastructure"
+    },
 
 
   ];
@@ -154,7 +150,7 @@ export default function MyProjectHighlights() {
                   ))}
                 </div>
               )}
-              <img src={project.img} alt={project.title} className={styles.respImage}  />
+              <img src={project.img} alt={project.title} className={styles.respImage} />
               <p className={styles.respDescription}>{project.description}</p>
               <div className={styles.respButtons}>
                 <a href={project.doc} target="_blank" rel="noreferrer">
