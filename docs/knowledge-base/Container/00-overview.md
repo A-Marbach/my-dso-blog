@@ -2,45 +2,182 @@
 title: Overview
 ---
 
-# Introduction: Docker in the Context of Containers
+# Containers and Docker
 
-To understand Docker’s role in the container ecosystem, it can be helpful to think of Docker as a brand that has become synonymous with the technology it popularized. Just as "Tempo" is a specific brand often used interchangeably with the term "tissue," Docker is a platform that has become almost synonymous with containers, even though other container technologies exist.
+Containers provide isolated environments for running applications together with their dependencies and configuration.
 
-In this analogy:
+Unlike virtual machines, containers share the host operating system kernel. This makes them lightweight, fast to start and well suited for application deployment and server operations.
 
-- **Docker** is like **Tempo** or **Zewa**, brands that are commonly used to refer to tissues or paper towels in general, even when people are using a different brand.
-- **Containers** are like **tissues** or **paper towels** themselves, which are the general products that serve a purpose independent of the specific brand.
+## What is Docker?
 
-While containers as a technology have existed before Docker, Docker revolutionized the way containers are built, shared, and deployed, much like how certain brands become household names by simplifying or standardizing a product. Docker provides a standardized set of tools to work with containers, which is why its name is often used as a shorthand for containers in general. However, it's important to remember that Docker is one option among many in the container space, similar to how "Tempo" is one brand among many tissue brands.
+Docker is a platform for building, running and managing containers.
 
-# What is Docker? 
+The basic workflow is:
 
-Docker is a platform for building and deploying containerized application. Theses containers include everything 
-needed to run an application, libraries and configurations. 
+1. A `Dockerfile` defines how an image is built.
+2. The image contains the application and its dependencies.
+3. A container is started from that image.
+4. Networking, volumes and environment variables connect the container to the surrounding system.
 
-```Dockerfile title="Dockerfile"
-# Use an official Python image as the base
-FROM python:3.9-slim
+## Image vs. Container
 
-# Set the working directory inside the container
+A Docker image is a reusable template that contains the application, dependencies and configuration required to run it.
 
-WORKDIR /app
+A container is a running instance of an image.
 
-# Copy only the requirements file and install dependencies
-
-RUN python -m pip install --no-cache-dir -r requirements.txt
-
-# Copy the Code into the working direction
-
-COPY . ${WORKDIR}
-
-# Change to the app directory and run database migrations
-
-WORKDIR /app/babyshop_app
-RUN python manage.py makemigrations
-RUN python manage.py migrate
-
-# This is the command that will be executed on container launch
-
-ENTRYPOINT ["sh", "-c", "python manage.py runserver 0.0.0.0:8025"]
+```text
+Dockerfile
+    |
+    v
+Docker Image
+    |
+    v
+Container
 ```
+
+The same image can be used to create multiple containers.
+
+## Dockerfile
+
+A `Dockerfile` defines how a Docker image is created.
+
+Typical instructions include:
+
+| Instruction | Purpose |
+|---|---|
+| `FROM` | Defines the base image |
+| `WORKDIR` | Sets the working directory |
+| `COPY` | Copies files into the image |
+| `RUN` | Executes commands during the build |
+| `EXPOSE` | Documents the application port |
+| `CMD` | Defines the default process started by the container |
+
+A practical example of building an image is covered in the **Create Your First Container Image** guide.
+
+## Container Lifecycle
+
+Containers can be started, stopped, restarted, replaced and removed.
+
+Some common operational commands are:
+
+```bash
+docker ps
+docker ps -a
+docker restart <container>
+docker logs <container>
+docker inspect <container>
+```
+
+These commands are useful when checking container state, analyzing errors and inspecting configuration.
+
+## Container Networking
+
+Containers run in isolated network environments.
+
+A containerized service can be exposed to the host by publishing a port.
+
+Example:
+
+```bash
+docker run -p 8080:80 nginx
+```
+
+This creates the following mapping:
+
+```text
+Host port 8080 -> Container port 80
+```
+
+This allows traffic arriving on port `8080` of the host to reach port `80` inside the container.
+
+Containers in the same Docker network can also communicate with each other without exposing every service publicly.
+
+## Persistent Data
+
+Containers are designed to be replaceable.
+
+Data that must survive container replacement should therefore be stored outside the container filesystem.
+
+Docker volumes provide persistent storage for this purpose.
+
+Typical use cases include:
+
+- databases
+- uploaded files
+- application state
+- configuration data that must persist
+
+A container can be recreated while the associated volume remains available.
+
+## Docker Compose
+
+Docker Compose is used to define and manage multiple related containers as one application stack.
+
+A typical application may contain:
+
+```text
+Web Application
+      |
+      v
+   Database
+      |
+      v
+ Monitoring
+```
+
+The services, networks, volumes and environment variables are defined in a Compose file.
+
+The stack can then be managed with commands such as:
+
+```bash
+docker compose up -d
+docker compose ps
+docker compose logs
+docker compose down
+```
+
+This makes multi-container environments easier to operate and reproduce.
+
+## Troubleshooting Containers
+
+Container troubleshooting usually starts with checking the current state and then narrowing down the cause of the problem.
+
+A typical process is:
+
+1. Check whether the container is running.
+2. Review the container logs.
+3. Verify port mappings and network connectivity.
+4. Inspect environment variables, volumes and configuration.
+5. Check resource usage.
+6. In Compose environments, identify which service is failing.
+
+Useful commands include:
+
+```bash
+docker ps -a
+docker logs <container>
+docker port <container>
+docker inspect <container>
+docker stats
+```
+
+For Docker Compose environments:
+
+```bash
+docker compose ps
+docker compose logs
+```
+
+## Skills Covered
+
+- Container fundamentals
+- Docker images and containers
+- Dockerfile concepts
+- Container lifecycle management
+- Container networking
+- Port mapping
+- Persistent storage
+- Docker Compose
+- Container logs
+- Container inspection
+- Container troubleshooting
