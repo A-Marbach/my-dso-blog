@@ -78,6 +78,9 @@ htop  # more user-friendly, may need to be installed
 # Disk usage
 df -h
 
+# Memory usage
+free -h
+
 # Directory size
 du -sh /var/log
 
@@ -90,7 +93,7 @@ ss -tulnp
 
 ## Firewall (UFW)
 
-UFW (Uncomplicated Firewall) is the standard firewall tool on Ubuntu/Debian systems.
+UFW (Uncomplicated Firewall) is a commonly used firewall management tool on Ubuntu systems.
 
 ```bash
 # Check firewall status

@@ -29,7 +29,7 @@ git clone -b develop https://github.com/username/repository.git
 
 ## Clone via SSH
 
-SSH is preferred for regular development since it avoids entering credentials on every push/pull.
+SSH is convenient for regular repository access because authentication can be handled using SSH keys.
 
 ```bash
 git clone git@github.com:username/repository.git
@@ -43,9 +43,11 @@ After cloning, Git automatically:
 - Sets `origin` as the name for the remote URL
 - Checks out the default branch (usually `main`)
 
-You can verify this with:
+You can verify the repository state, current branch and configured remote with:
 
 ```bash
+git status
+git branch
 git remote -v
 ```
 
