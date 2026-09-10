@@ -1,45 +1,87 @@
 # Deploy Docusaurus with Docker and NGINX
 
-To deploy the site using NGINX and Docker, use the following example Dockerfile configuration:
+This guide shows how to build a Docusaurus website with Docker and serve it through NGINX.
+
+## Prerequisites
+
+- Docker installed
+- A working Docusaurus project
+
+## Dockerfile
+
+Create a `Dockerfile` in the project root:
 
 ```dockerfile
-# Use Node:18 image as base
-FROM node:18 AS build
+FROM node:20-alpine AS build
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the package files and install dependencies
-COPY package.json ./
-RUN npm install
+COPY package*.json ./
+RUN npm ci
 
-# Copy the rest of the application files
 COPY . .
-
-# Copy the example.env to .env
-COPY example.env .env
-
-# Build the Docusaurus site
 RUN npm run build
 
-# Set up Nginx to serve the built site
 FROM nginx:alpine
 
-# Copy the build output from the previous step into the Nginx container
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Expose port 80 for Nginx
 EXPOSE 80
 
-# Nginx will automatically run in the foreground
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-Build and run the container:
+## Build the Image
 
 ```bash
-$ docker build -t docusaurus-blog .
-$ docker run -d -p 3000:80 docusaurus-blog
+docker build -t docusaurus-site .
 ```
 
-Once the container is running, the blog website will be accessible at `http://localhost:3000` or `http://<YOUR_VM_IP>:3000` in your browser.
+## Run the Container
+
+```bash
+docker run -d \
+  --name docusaurus-site \
+  -p 3000:80 \
+  docusaurus-site
+```
+
+The site is now available at:
+
+```text
+http://localhost:3000
+```
+
+On a remote server:
+
+```text
+http://<server-ip>:3000
+```
+
+## Verify the Deployment
+
+```bash
+docker ps
+docker logs docusaurus-site
+curl http://localhost:3000
+```
+
+## Troubleshooting
+
+If the site is not reachable:
+
+```bash
+docker ps -a
+docker logs docusaurus-site
+docker port docusaurus-site
+```
+
+On a remote Linux server, also check the firewall:
+
+```bash
+sudo ufw status
+```
+
+## Conclusion
+
+The Docusaurus site is built in a Node.js container and served as static files through NGINX using a multi-stage Docker build.
