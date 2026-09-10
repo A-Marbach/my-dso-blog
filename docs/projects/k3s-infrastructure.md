@@ -156,7 +156,7 @@ Provisioned servers:
 
 Cluster nodes as seen from Kubernetes:
 
-![Cluster Nodes](images/kubernetes/kubectl-get-nodes.png)
+![Cluster Nodes](/img/kubectl-get-nodes.png)
 
 ---
 
@@ -195,19 +195,19 @@ Infrastructure components:
 
 All pods running across the cluster:
 
-![All Pods](images/kubernetes/kubectl-get-pods-all.png)
+![All Pods](/img/kubectl-get-pods-all.png)
 
 Ingress routes exposing applications through Traefik:
 
-![Ingress Overview](images/kubernetes/kubectl-get-ingress-all.png)
+![Ingress Overview](/img/kubectl-get-ingress-all.png)
 
 TLS certificates issued via cert-manager and Let's Encrypt:
 
-![Certificates](images/kubernetes/kubectl-get-certificates-all.png)
+![Certificates](/img/kubectl-get-certificates-all.png)
 
 ### DaBubble
 
-![DaBubble Login](images/apps/dabubble-https-login.png)
+![DaBubble Login](/img/dabubble-https-login.png)
 
 
 ---
@@ -236,7 +236,7 @@ The monitoring stack is installed using the official **kube-prometheus-stack** H
 - Pod Restarts
 - Custom Grafana Dashboards
 
-![Grafana Dashboard](images/monitoring/grafana-dashboard.png)
+![Grafana Dashboard](/img/monitoring/grafana-dashboard.png)
 
 ---
 

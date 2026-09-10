@@ -43,7 +43,7 @@ Conduit Backend ───┘
 
 Example Grafana dashboard for the monitored services.
 
-![Grafana Dashboard](img/grafana-monitoring.png)
+![Grafana Dashboard](/img/grafana-monitoring.png)
 
 ## Quickstart
 
