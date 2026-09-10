@@ -1,128 +1,218 @@
 # Conduit Docker Project
 
-This repository contains a Docker Compose setup for running the Conduit application, including a Django backend and an Angular frontend.  
-The project is designed to be easy to deploy, with persistent data storage and configurable environment variables.
+Docker Compose setup for running the Conduit application with a Django backend and Angular frontend.
+
+The project demonstrates containerized application deployment, persistent configuration, image delivery through GHCR and automated deployment with GitHub Actions.
 
 ## Table of Contents
+
+- [Architecture](#architecture)
 - [Quickstart](#quickstart)
-- [Usage](#usage)
-    - [Environment Variables](#environment-variables)
-    - [Volumes](#volumes)
-    - [Restarting and Stopping Containers](#restarting-and-stopping-containers)
-- [Security](#security)
+- [Environment Variables](#environment-variables)
+- [Container Operations](#container-operations)
 - [GitHub Actions Deployment](#github-actions-deployment)
-- [Extras](#extras)
+- [Security](#security)
+- [Troubleshooting](#troubleshooting)
+- [Skills Demonstrated](#skills-demonstrated)
+
+## Architecture
+
+```text
+GitHub Repository
+       |
+       v
+GitHub Actions
+       |
+       v
+GitHub Container Registry
+       |
+       v
+Linux VM
+       |
+       v
+Docker Compose
+   |        |
+   v        v
+Backend   Frontend
+```
+
+Backend and frontend images are built in GitHub Actions and stored in GitHub Container Registry.
+
+The Linux VM pulls the pre-built images and runs the application with Docker Compose.
 
 ## Quickstart
 
 ### Prerequisites
+
 - Docker
 - Docker Compose
-- GitHub Actions enabled (for automated build & deployment)
+- Git
 
-### Steps
-1. Clone this repository:
+Clone the repository:
+
 ```bash
 git clone git@github.com:A-Marbach/conduit-container.git
 cd conduit-container
 ```
-2. Initialize submodules (backend and frontend):
+
+Initialize the frontend and backend submodules:
 
 ```bash
 git submodule update --init --recursive
 ```
-3. Copy the example environment file:
+
+Create the backend environment file:
 
 ```bash
 cp backend/.env.example backend/.env
 ```
 
-4. Build the containers:
+Start the application:
 
 ```bash
-docker-compose build --no-cache
-docker-compose up -d
+docker compose up -d
 ```
 
-5. Open the application in your browser:
-* Frontend: `http://<your_vm_ip>:8282`
-* Backend API: `http://<your_vm_ip>:5000/admin/`
+Check the running containers:
 
+```bash
+docker compose ps
+```
 
-## Usage
+The application is available at:
 
-Navigate to the frontend URL to use the Conduit application.
-
-The backend API is available at /api/.
-
-Make sure all environment variables are correctly set before starting.
+```text
+Frontend: http://<server-ip>:8282
+Backend:  http://<server-ip>:5000
+```
 
 ## Environment Variables
 
-You can modify .env files or the environment: section in docker-compose.yaml for a secure deployment:
+Application configuration is stored in environment variables.
 
-```
-| Variable           | Description                       | Default                     |
-|--------------------|-----------------------------------|-----------------------------|
-| DJANGO_SECRET_KEY  | Django secret key                 | changeme                    |
-| DATABASE_NAME      | Name of the PostgreSQL/SQLite DB  | conduit                     |
-| DATABASE_USER      | Database username                 | user                        |
-| DATABASE_PASSWORD  | Database password                 | password                    |
-| DATABASE_HOST      | Database host                     | db                          |
-| DATABASE_PORT      | Database port                     | 5432                        |
-```
-## Volumes
+| Variable | Description | Example |
+|---|---|---|
+| `DJANGO_SECRET_KEY` | Django secret key | `changeme` |
+| `DATABASE_NAME` | Database name | `conduit` |
+| `DATABASE_USER` | Database user | `user` |
+| `DATABASE_PASSWORD` | Database password | `password` |
+| `DATABASE_HOST` | Database host | `db` |
+| `DATABASE_PORT` | Database port | `5432` |
 
-* backend_data: Stores backend data (if any persistent storage is needed)
+Sensitive values should not be committed to the repository.
 
-* frontend_data: Stores frontend build files
+## Container Operations
 
-Volumes ensure data persists even after container restarts or recreation.
+Check container status:
 
-### Restarting and Stopping Containers
-
-Restart and Stopping containers:
 ```bash
-docker-compose restart
-docker-compose down
+docker compose ps
 ```
-## Security
-* Do not commit .env files, SSH keys, passwords, or any sensitive information to the repository.
-* Do not include IP addresses or credentials in the frontend code.
 
+View logs:
+
+```bash
+docker compose logs
+```
+
+Restart the application:
+
+```bash
+docker compose restart
+```
+
+Stop and remove the containers:
+
+```bash
+docker compose down
+```
 
 ## GitHub Actions Deployment
 
-The new deployment workflow uses GitHub Actions to:
+The deployment workflow:
 
-1. Build backend & frontend images
+1. Builds backend and frontend Docker images
+2. Pushes the images to GitHub Container Registry
+3. Connects to the Linux VM through SSH
+4. Pulls the latest images
+5. Restarts the containers with Docker Compose
 
-2. Push them to GitHub Container Registry (GHCR)
-
-3. Update containers on the VM via Docker Compose
-
-> **Note:** The VM no longer builds images itself – it only pulls the pre-built images from GHCR.
-
-* Workflow file: .github/workflows/deployment.yaml
-* Requirements: SSH key & GHCR Personal Access Token stored as repository secrets.
-
-#### Deployment Flow
-
-```mermaid
-flowchart TD
-    GitHubRepo[GitHub Repository] -->|Push or PR merged| Actions[GitHub Actions Workflow]
-    Actions --> Build[Build Docker Images]
-    Build --> Push[Push to GHCR]
-    Push --> Pull[VM pulls images with Docker Compose]
-    Pull --> Running[Containers running on VM]
+```text
+Push to GitHub
+      |
+      v
+GitHub Actions
+      |
+      v
+Build Images
+      |
+      v
+Push to GHCR
+      |
+      v
+Linux VM pulls images
+      |
+      v
+Docker Compose starts containers
 ```
 
-### Extras
+The VM does not build application images itself.
 
-* You can add additional frontend features or backend apps as needed.
+Workflow:
 
+```text
+.github/workflows/deployment.yaml
+```
 
+## Security
 
-> **Note:**  
-> Edit the `.env` files if you want custom credentials.  
-> Do **not** commit `.env` files to the repository, as they contain sensitive information.
+- Environment files are excluded from version control
+- Credentials and SSH keys are stored as GitHub repository secrets
+- Application secrets are not hard-coded into frontend code
+- Docker images are built in CI instead of directly on the production VM
+
+## Troubleshooting
+
+Check container state:
+
+```bash
+docker compose ps
+```
+
+Inspect application logs:
+
+```bash
+docker compose logs
+```
+
+Check individual service logs:
+
+```bash
+docker compose logs backend
+docker compose logs frontend
+```
+
+Verify listening ports on the Linux server:
+
+```bash
+sudo ss -tulnp
+```
+
+If the application is not reachable, also verify firewall rules:
+
+```bash
+sudo ufw status
+```
+
+## Skills Demonstrated
+
+- Linux-based Application Operations
+- Docker
+- Docker Compose
+- Container Deployment
+- GitHub Actions
+- GitHub Container Registry
+- SSH-based Deployment
+- Environment Configuration
+- Container Logging
+- Basic Network Troubleshooting
