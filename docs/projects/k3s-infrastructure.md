@@ -96,7 +96,7 @@ kubectl apply -f kubernetes/
 
 # Architecture
 
-![Architecture Diagram](images/architect-diagramm/architecture-diagram.svg)
+![Architecture Diagram](/img/architecture-diagram.svg)
 
 ---
 
@@ -146,7 +146,7 @@ Terraform provisions the Hetzner Cloud infrastructure for the k3s cluster.
 
 Provisioned servers:
 
-![Hetzner Cloud Servers](images/terraform/hetzner-servers.png)
+![Hetzner Cloud Servers](/img/hetzner-servers.png)
 
 | Server        | Role                     |
 |---------------|--------------------------|
@@ -236,7 +236,7 @@ The monitoring stack is installed using the official **kube-prometheus-stack** H
 - Pod Restarts
 - Custom Grafana Dashboards
 
-![Grafana Dashboard](/img/monitoring/grafana-dashboard.png)
+![Grafana Dashboard](/img/grafana-dashboard.png)
 
 ---
 
