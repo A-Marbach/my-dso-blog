@@ -1,6 +1,6 @@
 # The Linux Commandline
 
-The Linux command line (shell) is your primary interface for interacting with a Linux system. This article covers the most commonly used commands to navigate, manage files, and work with processes.
+The Linux command line is a core tool for system administration, troubleshooting and day-to-day server operations. This article covers essential commands for navigation, file management, permissions, searching and process-related tasks.
 
 ## Navigation
 
@@ -22,7 +22,8 @@ The Linux command line (shell) is your primary interface for interacting with a 
 | `cp <src> <dest>` | Copy a file or directory |
 | `mv <src> <dest>` | Move or rename a file |
 | `rm <file>` | Delete a file |
-| `rm -rf <dir>` | Delete a directory and all its contents |
+| `rm -r <dir>` | Delete a directory recursively |
+| `rm -rf <dir>` | Force-delete a directory recursively — use with caution |
 
 ## Viewing File Contents
 
@@ -62,9 +63,24 @@ chmod +x script.sh
 chown user:group file.txt
 ```
 
-Permission notation: `rwxr-xr--`
-- `r` = read, `w` = write, `x` = execute
-- First 3 characters: owner — next 3: group — last 3: others
+Permission notation example: `rwxr-xr--`
+
+- `r` = read
+- `w` = write
+- `x` = execute
+- first group = owner
+- second group = group
+- third group = others
+
+## Processes
+
+| Command | Description |
+|---|---|
+| `ps aux` | List running processes |
+| `top` | Monitor processes and resource usage |
+| `pgrep <name>` | Find process IDs by name |
+| `kill <pid>` | Send a termination signal to a process |
+| `kill -9 <pid>` | Forcefully terminate a process — use only when necessary |
 
 ## Useful Shortcuts
 

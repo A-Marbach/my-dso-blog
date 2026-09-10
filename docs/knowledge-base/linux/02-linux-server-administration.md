@@ -1,6 +1,6 @@
 # Linux Server Administration
 
-This article covers the essential tasks for administering a Linux server: managing users, controlling services, and monitoring system resources.
+This article covers essential Linux server administration tasks, including user management, service control, log analysis, resource monitoring, firewall configuration and package management.
 
 ## User Management
 
@@ -16,6 +16,15 @@ su - username
 
 # Delete a user
 sudo deluser username
+
+# Set or change a user password
+sudo passwd username
+
+# Lock a user account
+sudo passwd -l username
+
+# Unlock a user account
+sudo passwd -u username
 ```
 
 ## Managing Services with systemd
@@ -51,6 +60,12 @@ sudo journalctl -u nginx -f
 
 # Show logs from the last hour
 sudo journalctl --since "1 hour ago"
+
+# Show logs from the current boot
+sudo journalctl -b
+
+# Show only errors
+sudo journalctl -p err
 ```
 
 ## Monitoring Resources
