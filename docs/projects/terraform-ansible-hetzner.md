@@ -1,6 +1,6 @@
 # Terraform-Ansible-Hetzner
 
-The project automates provisioning and configuration of Ubuntu servers on Hetzner Cloud using Terraform and Ansible.
+This project automates the provisioning, configuration and basic hardening of Ubuntu 24.04 servers on Hetzner Cloud using Terraform and Ansible.
 ---
 
 ## Table of Contents
@@ -12,6 +12,8 @@ The project automates provisioning and configuration of Ubuntu servers on Hetzne
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Troubleshooting](#troubleshooting)
+- [Skills Demonstrated](#skills-demonstrated)
+
 
 ---
 
@@ -85,15 +87,22 @@ ssh artur@<server_ip>
 The project provisions and configures the following infrastructure:
 
 ```text
-Hetzner Cloud
+Terraform
 │
-├── Ubuntu 24.04 Server
-├── Firewall
-└── Ansible
-    ├── Nginx
-    ├── Fail2Ban 
-    ├── Admin User 
-    ├── SSH Access
+├── Hetzner Cloud Server
+├── Hetzner Firewall
+└── SSH Key
+        │
+        ▼
+Ubuntu 24.04 Server
+        │
+        ▼
+Ansible
+├── Admin User
+├── SSH Configuration
+├── NGINX
+├── Fail2Ban
+└── System Updates
 ```
 
 ---
@@ -136,9 +145,9 @@ Ansible is responsible for server configuration and software deployment.
 
 #### Web Server
 
-* Install Nginx
-* Enable Nginx service
-* Start Nginx automatically
+* Install NGINX
+* Enable NGINX service
+* Start NGINX automatically
 
 #### Security
 
@@ -168,7 +177,7 @@ Become root:
 sudo -i
 ```
 
-Verify Nginx:
+Verify NGINX:
 
 ```bash
 systemctl status nginx
@@ -200,7 +209,7 @@ terraform-ansible-hetzner/
 │   ├── main.tf
 │   ├── variables.tf
 │   ├── outputs.tf
-│   └── terraform.tfvars
+│   └── terraform.tfvars.example
 │
 ├── ansible/
 │   ├── playbook.yml
@@ -249,12 +258,25 @@ ssh artur@<server_ip>
 
 ```bash
 systemctl status nginx
+journalctl -u nginx
 
 systemctl status fail2ban
+journalctl -u fail2ban
+fail2ban-client status
 ```
 
 ---
 
+## Skills Demonstrated
+
+- Linux Administration
+- Infrastructure as Code
+- Configuration Management
+- SSH and User Management
+- Firewall Configuration
+- Service Management with systemd
+- Troubleshooting with journalctl
+- Infrastructure Automation
 
 
 

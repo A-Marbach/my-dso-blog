@@ -1,8 +1,8 @@
 # Conduit AWS Infrastructure
 
-A complete cloud deployment demonstrating how to deploy, secure, automate and monitor a modern web application on AWS.
+AWS infrastructure for deploying, configuring and monitoring a containerized web application on an Ubuntu EC2 server.
 
-This project showcases a production-style DevOps workflow using Infrastructure as Code, automated deployments and cloud-native monitoring.
+This project demonstrates Linux server administration, Infrastructure as Code, configuration management, container deployment and AWS monitoring.
 
 ---
 
@@ -20,39 +20,41 @@ This project showcases a production-style DevOps workflow using Infrastructure a
 - [Security](#security)
 - [Project Structure](#project-structure)
 - [Deployment](#deployment)
-- [Future Improvements](#future-improvements)
+- [Skills Demonstrated](#skills-demonstrated)
 
 ---
 
 ## Overview
 
-Many companies struggle with manual infrastructure provisioning, inconsistent server configurations and missing monitoring.
+This project demonstrates the deployment and operation of a containerized web application on AWS.
 
-This project demonstrates how these challenges can be solved using modern DevOps practices.
+Terraform provisions the AWS infrastructure, including networking, IAM and an Ubuntu EC2 instance.
 
-The infrastructure is provisioned with Terraform, configured automatically using Ansible and monitored with AWS CloudWatch.
+Ansible configures the Linux server, installs the required services and prepares the application environment.
 
-Application container images are built and published by a separate application repository through a GitHub Actions pipeline and deployed to the AWS infrastructure.
+The application is deployed with Docker Compose, exposed through NGINX over HTTPS and monitored with AWS CloudWatch.
+
+Application container images are built and published by a separate repository using GitHub Actions and GitHub Container Registry.
 
 ---
 
 ## Features
 
-- Automated AWS infrastructure provisioning with Terraform
-- Fully automated server configuration using Ansible
-- Automated application deployment using Docker Compose
-- Integration with a GitHub Actions deployment pipeline
-- Secure HTTPS communication using Let's Encrypt
-- Containerized application deployment
-- Infrastructure monitoring with AWS CloudWatch
-- Infrastructure managed entirely as code
+- AWS infrastructure provisioning with Terraform
+- Automated Ubuntu server configuration with Ansible
+- Containerized application deployment with Docker Compose
+- NGINX reverse proxy configuration
+- HTTPS with Let's Encrypt
+- GitHub Actions deployment integration
+- AWS CloudWatch monitoring
+- Infrastructure and server configuration managed as code
 
 ---
 
 ## Architecture
 
 ```text
-          Application Repository
+ Application Repository
                    │
                    │ Push
                    ▼
@@ -74,20 +76,16 @@ Application container images are built and published by a separate application r
                    ▼
              AWS EC2 Instance
                    │
-        ┌──────────┴──────────┐
-        │                     │
-     Docker Compose        NGINX
-        │                     │
-        └──────────┬──────────┘
-                   │
-             HTTPS (Let's Encrypt)
-                   │
-                   ▼
-                Internet
-
-                   │
-                   ▼
-          AWS CloudWatch Monitoring
+        ┌──────────┼──────────┐
+        │          │          │
+ Docker Compose   NGINX   CloudWatch Agent
+        │          │          │
+        └────┬─────┘          │
+             │                │
+     HTTPS (Let's Encrypt)    │
+             │                │
+             ▼                ▼
+          Internet      AWS CloudWatch
 ```
 
 ---
@@ -97,25 +95,29 @@ Application container images are built and published by a separate application r
 ### AWS Infrastructure
 Terraform-provisioned AWS infrastructure.
 
-![AWS Infrastructure](/img/aws-ec2-instance.png)
+![AWS Infrastructure](screenshots/aws-ec2-instance.png)
+
 ---
 
 ### Application CI/CD Pipeline
 Docker image build, security scanning and publishing through the application repository.
 
-![GitHub Actions Pipeline](/img/github-actions-pipeline.png)
+![GitHub Actions Pipeline](screenshots/github-actions-pipeline.png)
+
 ---
 
 ### CloudWatch Dashboard
 Infrastructure monitoring with CPU, memory, disk and network metrics.
 
-![CloudWatch Dashboard](/img/cloudwatch-dashboard.png)
+![CloudWatch Dashboard](screenshots/cloudwatch-dashboard.png)
+
 ---
 
 ### HTTPS Deployment
 Application secured with Let's Encrypt.
 
-![HTTPS Deployment](/img/https-deployment.png)
+![HTTPS Deployment](screenshots/https-deployment.png)
+
 ---
 
 ### Running Containers
@@ -124,7 +126,7 @@ Application secured with Let's Encrypt.
 docker ps
 ```
 
-![Running Docker Containers](/img/docker-containers.png)
+![Running Docker Containers](screenshots/docker-containers.png)
 
 ---
 
@@ -132,22 +134,22 @@ docker ps
 
 | Category | Technologies |
 |----------|--------------|
-| Cloud | AWS EC2 |
+| Operating System | Ubuntu 24.04 LTS |
+| Cloud | AWS EC2, VPC, IAM, CloudWatch |
 | Infrastructure as Code | Terraform |
 | Configuration Management | Ansible |
 | Containers | Docker, Docker Compose |
-| Container Registry | GitHub Container Registry (GHCR) |
-| CI/CD Integration | GitHub Actions |
 | Reverse Proxy | NGINX |
 | TLS | Let's Encrypt |
 | Monitoring | AWS CloudWatch |
-| Operating System | Ubuntu 24.04 LTS |
+| Container Registry | GitHub Container Registry (GHCR) |
+| CI/CD Integration | GitHub Actions |
 
 ---
 
 ## Infrastructure
 
-Terraform provisions:
+Terraform provisions the AWS networking, access control and compute resources required for the application environment:
 
 - VPC
 - Public Subnet
@@ -162,7 +164,7 @@ Terraform provisions:
 
 ## Configuration Management
 
-Ansible configures:
+Ansible configures the Ubuntu EC2 instance and prepares it for application operation:
 
 - Docker
 - Docker Compose
@@ -176,7 +178,7 @@ Ansible configures:
 
 ## Deployment Workflow
 
-This repository is responsible for provisioning, configuring and operating the AWS infrastructure.
+This repository provisions, configures and operates the AWS infrastructure for the application.
 
 1. Terraform provisions the infrastructure.
 2. Ansible configures the EC2 instance.
@@ -192,6 +194,8 @@ This repository is responsible for provisioning, configuring and operating the A
 
 ## Monitoring
 
+AWS CloudWatch and the CloudWatch Agent are used to monitor the EC2 instance and operating system metrics.
+
 Collected metrics include:
 
 - CPU Utilization
@@ -203,29 +207,30 @@ Collected metrics include:
 
 ## Security
 
-Implemented security measures:
+Security measures implemented across the AWS infrastructure, Linux server and deployment workflow include:
 
 - IAM Roles
 - Security Groups
-- HTTPS (Let's Encrypt)
 - SSH Key Authentication
+- HTTPS with Let's Encrypt
 - GitHub Secrets
-- Secret Detection (Gitleaks)
-- Dockerfile Linting (Hadolint)
-- Container Vulnerability Scanning (Trivy)
+- Secret Detection with Gitleaks
+- Dockerfile Linting with Hadolint
+- Container Vulnerability Scanning with Trivy
 
 ---
+
 
 ## Project Structure
 
 ```text
 conduit-aws/
-├── terraform/
-├── ansible/
+├── terraform/          # AWS infrastructure
+├── ansible/            # Ubuntu server configuration
 │   ├── inventory/
 │   ├── roles/
 │   └── playbook.yml
-├── screenshots/
+├── screenshots/        # Infrastructure and monitoring screenshots
 └── README.md
 ```
 
@@ -242,23 +247,28 @@ terraform plan
 terraform apply
 ```
 
-Configure the server:
+Configure the Ubuntu EC2 instance:
 
 ```bash
 cd ansible
 ansible-playbook playbook.yml
 ```
 
-Application updates are automatically deployed after new container images are published by the application repository.
+Application updates are deployed after new container images are built and published by the application repository.
 
 ---
 
-## Future Improvements
+## Skills Demonstrated
 
-- Application Load Balancer
-- Auto Scaling Group
-- CloudWatch Alarms
-- SNS Notifications
-- Multi-Environment Support (dev/prod)
-- Blue/Green Deployments
-- Amazon ECS / AWS Fargate
+- Linux Server Administration
+- Ubuntu Server Configuration
+- AWS Infrastructure
+- Terraform
+- Ansible
+- Docker and Docker Compose
+- NGINX Reverse Proxy
+- HTTPS and TLS
+- AWS CloudWatch Monitoring
+- IAM and Security Groups
+- Infrastructure Troubleshooting
+- CI/CD Integration
