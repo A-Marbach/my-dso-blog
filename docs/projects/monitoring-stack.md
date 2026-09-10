@@ -74,10 +74,10 @@ Change the default Grafana admin password after first login.
 
 Prometheus targets are configured in `prometheus/prometheus.yml`:
 
-| Job             | Target                | Endpoint |
-|-----------------|-----------------------|----------|
-| bookstore-api   | <your-server-ip>:8080 | /metrics |
-| conduit-backend | <your-server-ip>:5000 | /metrics |
+| Job             | Target                  | Endpoint |
+|-----------------|-------------------------|----------|
+| bookstore-api   | `<your-server-ip>:8080` | /metrics |
+| conduit-backend | `<your-server-ip>:5000` | /metrics |
 
 Check target status:
 
