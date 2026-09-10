@@ -3,15 +3,15 @@ import styles from './my-skills.module.css';
 
 export default function MySkills() {
 const skills = [
-  { img: "img/linux.svg", title: "Linux", description: ["System administration", "User & permission management", "Troubleshooting"] },
-  { img: "img/aws.svg", title: "AWS", description: ["Cloud infrastructure", "EC2 & networking", "IAM & monitoring"] },
-  { img: "img/docker.svg", title: "Docker", description: ["Containerizing applications", "Building Docker images", "Docker Compose deployments"] },
-  { img: "img/terraform.svg", title: "Terraform", description: ["Infrastructure as Code", "Resource provisioning", "State management"] },
+  { img: "img/linux.svg", title: "Linux", description: ["System administration", "User & permission management", "SSH, systemd & troubleshooting"] },
   { img: "img/ansible.svg", title: "Ansible", description: ["Configuration management", "Playbook automation", "Server provisioning"] },
-  { img: "img/cicd.svg", title: "CI/CD", description: ["Build & test pipelines", "GitHub Actions", "Automated deployments"] },
+  { img: "img/terraform.svg", title: "Terraform", description: ["Infrastructure as Code", "Resource provisioning", "State management"] },
+  { img: "img/docker.svg", title: "Docker", description: ["Containerizing applications", "Building Docker images", "Docker Compose deployments"] },
+  { img: "img/grafana.svg", title: "Monitoring", description: ["Prometheus & Grafana", "Metrics visualization", "Alerting"] },
+  { img: "img/aws.svg", title: "AWS", description: ["Cloud infrastructure", "EC2 & networking", "IAM & CloudWatch"] },
   { img: "img/github.svg", title: "Git / GitHub", description: ["Version control", "Repository management", "Collaborative workflows"] },
+  { img: "img/cicd.svg", title: "CI/CD", description: ["Build & test pipelines", "GitHub Actions", "Automated deployments"] },
   { img: "img/kubernetes.svg", title: "Kubernetes", description: ["Cluster operations (k3s)", "Helm deployments", "Ingress & TLS"] },
-  { img: "img/grafana.svg", title: "Grafana", description: ["Dashboard creation", "Metrics visualization", "Alerting"] },
 ];
   const [activePage, setActivePage] = useState(0);
 

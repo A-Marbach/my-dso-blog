@@ -5,18 +5,28 @@ import styles from './my-project-highlights.module.css';
 export default function MyProjectHighlights() {
   const projects = [
     {
-      img: "img/vikunja-aws-image.png",
-      title: "Vikunja AWS Fargate",
+      img: "img/linux-server-automation.png",
+      title: "Linux Server Automation",
       description:
-        "Built and operated an AWS ECS Fargate environment with Terraform, including private networking, ALB, RDS PostgreSQL, S3 persistence, Secrets Manager, CloudWatch alarms, SNS notifications, backup and restore testing, and Terraform CI.",
+        "Provisioned an Ubuntu 24.04 server with Terraform and configured it with Ansible. Implemented user management, SSH hardening, firewall rules, NGINX and Fail2Ban.",
       techIcons: [
-        "img/container.png",
         "img/yaml.png",
         "img/security.png",
-        "img/cicd.png"
       ],
-      github: "https://github.com/A-Marbach/vikunja-aws-fargate",
-      doc: "/myPortfolio/docs/projects/vikunja-aws-fargate"
+      github: "https://github.com/A-Marbach/terraform-ansible-hetzner",
+      doc: "/myPortfolio/docs/projects/terraform-ansible-hetzner"
+    },
+      {
+      img: "img/monitoring-stack-img.png",
+      title: "Monitoring Stack",
+      description: "Built a monitoring platform with Prometheus and Grafana for infrastructure and container observability, including metrics collection, dashboards, and alerting.",
+      techIcons: [
+        "img/container.png",
+        "img/shell.png",
+        "img/yaml.png",
+      ],
+      github: "https://github.com/A-Marbach/monitoring-stack",
+      doc: "/myPortfolio/docs/projects/monitoring-stack"
     },
     {
       img: "img/aws-img.png",
@@ -44,19 +54,7 @@ export default function MyProjectHighlights() {
       github: "https://github.com/A-Marbach/bookStoreAPI",
       doc: "/myPortfolio/docs/projects/bookstore-api"
     },
-    {
-      img: "img/monitoring-stack-img.png",
-      title: "Monitoring Stack",
-      description: "Built a monitoring platform with Prometheus and Grafana for infrastructure and container observability, including metrics collection, dashboards, and alerting.",
-      techIcons: [
-        "img/container.png",
-        "img/shell.png",
-        "img/yaml.png",
-        "img/security.png"
-      ],
-      github: "https://github.com/A-Marbach/monitoring-stack",
-      doc: "/myPortfolio/docs/projects/monitoring-stack"
-    },
+  
 
     {
       img: "img/k3s-img.png",
@@ -80,7 +78,9 @@ export default function MyProjectHighlights() {
     <section id="my-projects" className={styles.myProjectHighlights}>
       <div className={styles.wrapper}>
         <h1>My Project Highlights</h1>
-        <p className={styles.subtitle}>I build and operate Linux and cloud infrastructure using AWS, Docker, Kubernetes, CI/CD pipelines, monitoring, and automation.</p>
+        <p className={styles.subtitle}>
+          I build and operate Linux infrastructure with a focus on server administration, automation, monitoring and cloud environments.
+        </p>
 
         {/* Desktop */}
         <div className={styles.projectsContainer}>
@@ -165,7 +165,7 @@ export default function MyProjectHighlights() {
 
           <div className={styles.seeMoreWrapper}>
             <a
-              href="https://github.com/A-Marbach?tab=repositories"
+              href="https://a-marbach.github.io/myPortfolio/docs/projects/overview/"
               target="_blank"
               rel="noopener noreferrer"
             >

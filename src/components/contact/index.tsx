@@ -15,9 +15,9 @@ export default function AddressSection() {
         <div className={styles.contentArea}>
           
           <ul className={styles.bulletList}>
-            <li>Linux | IT Operations | Cloud & DevOps</li>
+            <li>Linux | IT Operations </li>
 
-            <li>Open to opportunities in Linux Administration, IT Operations, System Administration, Cloud Infrastructure, and Junior DevOps.</li>
+            <li>Open to opportunities in Linux Administration, IT Operations, System Administration and Linux-focused Cloud Infrastructure.</li>
           </ul>
 
           <div className={styles.infoBox}>
